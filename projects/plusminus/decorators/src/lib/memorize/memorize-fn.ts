@@ -1,7 +1,20 @@
-export const memorizeFn = <T extends () => void, R = any>(fn: T, size = 5, duration = 0): (...args: any[]) => R => {
+import { MemorizeOptions } from './memorize-options.interface';
+
+const DEFAULT_OPTS: MemorizeOptions = {
+  size: 20,
+  duration: 0,
+};
+
+/**
+ * Higher-order function that memoizes functions.
+ *
+ * @see `{@link MemorizeOptions}`
+ */
+export const memorizeFn = <T extends (...args: any[]) => any, R = any>(
+  fn: T, opts: MemorizeOptions = DEFAULT_OPTS): (...args: any[]) => R => {
   const cache: Map<string, R> = new Map<string, R>();
-  if (duration) {
-    setInterval(() => cache.clear(), duration);
+  if (opts.duration) {
+    setInterval(() => cache.clear(), opts.duration);
   }
 
   return (...args: any[]): R => {
@@ -13,7 +26,7 @@ export const memorizeFn = <T extends () => void, R = any>(fn: T, size = 5, durat
     try {
       return cache.get(key);
     } finally {
-      if (cache.size > size) {
+      if (cache.size > opts.size) {
         cache.delete(cache.keys().next().value);
       }
     }

@@ -1,8 +1,16 @@
 import { memorizeFn } from './memorize-fn';
+import { MemorizeOptions } from './memorize-options.interface';
 
-export function Memorize(opts: { size?: number; duration?: number } = {}): any {
+/**
+ * A decorator that memoizes class methods.
+ *
+ * @see `{@link MemorizeOptions}`
+ *
+ * @Annotation
+ */
+export function Memorize(opts?: MemorizeOptions): any {
   return (target: object, name: string, descriptor: PropertyDescriptor): PropertyDescriptor => {
-    descriptor.value = memorizeFn(target[name], opts.size, opts.duration);
+    descriptor.value = memorizeFn(target[name], opts);
 
     return descriptor;
   };
