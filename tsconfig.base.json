@@ -19,9 +19,9 @@
       "@angular/*": [
         "./node_modules/@angular/*"
       ],
-      "@plusminus/decorators": [
-        "dist/plusminus/decorators/plusminus-decorators",
-        "dist/plusminus/decorators"
+      "plusminus-decorators": [
+        "dist/plusminus-decorators/plusminus-decorators",
+        "dist/plusminus-decorators"
       ]
     }
   }

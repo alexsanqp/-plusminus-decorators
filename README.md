@@ -1,10 +1,10 @@
-# @plusminus/decorators
+# plusminus-decorators
 
 An Angular decorators.
 
 ## Installation
 
-- `npm install @plusminus/decorators`
+- `npm install plusminus-decorators`
 
 ## Usage
 
@@ -56,7 +56,7 @@ you need to pass an array where the first element will be the mixin class itself
 and all subsequent elements are its parameters.
 
 ```ts
-  import { Mixins } from '@plusminus/decorators';
+  import { Mixins } from 'plusminus-decorators';
  
   @Component({...})
   @Mixins([
@@ -136,7 +136,7 @@ class ProductService {
 If you use memoization, then it will be executed once, and the cached value of the result of your method will be given to all subsequent changes.
 
 ```ts
-import { Memorize } from '@plusminus/decorators';
+import { Memorize } from 'plusminus-decorators';
 
 @Component({
   selector: 'pm-root',
@@ -176,7 +176,7 @@ export class AppComponent {
 You can also use the memoization function directly in your code.
 
 ```ts
-import { memorizeFn } from '@plusminus/decorators';
+import { memorizeFn } from 'plusminus-decorators';
 
 const displayTitleMemo = memorizeFn(({ title, vendorCode }: Product): string => {
     return `#${ vendorCode } ${ title }`;

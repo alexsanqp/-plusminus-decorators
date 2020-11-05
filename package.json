@@ -1,6 +1,6 @@
 {
-  "name": "@plusminus/decorators",
-  "version": "0.0.1",
+  "name": "workspace-plusminus-decorators",
+  "version": "0.0.2",
   "description": "An Angular decorators",
   "keywords": [
     "angular2",
