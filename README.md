@@ -1,6 +1,6 @@
 # @plusminus/decorators
 
-A context menu built with Angular (6) inspired by [ui.bootstrap.contextMenu](https://github.com/Templarian/ui.bootstrap.contextMenu).  Bootstrap classes are included in the markup, but there is no explicit dependency on Bootstrap. [Demo](https://isaacplmann.github.io/ngx-contextmenu/) [Stackblitz example](https://stackblitz.com/edit/ngx-contextmenu-example)
+An Angular decorators.
 
 ## Installation
 
@@ -12,8 +12,8 @@ A context menu built with Angular (6) inspired by [ui.bootstrap.contextMenu](htt
 
 Decorator that helps you implement incomplete multiple inheritance.
 
-**Mixin** classes do not support CIs because they are executed earlier. Used to refine the behavior
-of other classes, not intended to spawn self-used objects. Mixins are useful for bringing common
+**Mixin** classes do not support DI. Used to refine the behavior of other classes,
+not intended to spawn self-used objects. The mixins are useful for bringing common
 functionality into a single place and being reusable.
 
 The parent class needs to implement the mixin classes (only the declaration of properties or methods)
@@ -60,7 +60,7 @@ and all subsequent elements are its parameters.
      GoodbyeMixin,
      [GreeterMixin, 'John', 'Wick'],
   ])
-  class HelloWorld implements GreeterMixinType {
+  class HelloWorld implements GreeterMixinType, SubscriptionMixin, GoodbyeMixin {
      public fullName: string;
      public greet: () => string;
      // Other declarations: SubscriptionMixin, GoodbyeMixin
