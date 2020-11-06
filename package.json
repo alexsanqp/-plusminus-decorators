@@ -1,5 +1,5 @@
 {
-  "name": "workspace-plusminus-decorators",
+  "name": "@plus-minus/decorators",
   "version": "0.0.2",
   "description": "An Angular decorators",
   "keywords": [
@@ -13,17 +13,30 @@
   "author": "Alexandr Krykhtenko <alexsanqp@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "github://github.com/alexsanqp/plusminus-decorators.git"
+    "url": "https://github.com/alexsanqp/plusminus-decorators.git"
   },
+  "bugs": {
+    "url": "https://github.com/alexsanqp/plusminus-decorators/issues"
+  },
+  "homepage": "https://github.com/alexsanqp/plusminus-decorators#readme",
+  "license": "MIT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --project=@plus-minus/decorators --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "pack:lib": "npm pack ./dist/plus-minus/decorators",
+    "postpublish": "git push origin --all; git push origin --tags",
+    "postversion": "npm publish --tag=legacy"
   },
   "private": false,
+  "sideEffects": false,
+  "peerDependencies": {
+    "@angular/common": "^10.0.14",
+    "@angular/core": "^10.0.14"
+  },
   "dependencies": {
     "@angular/animations": "~10.0.5",
     "@angular/common": "~10.0.5",

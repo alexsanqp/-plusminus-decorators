@@ -8,10 +8,10 @@
   "files": [],
   "references": [
     {
-      "path": "./projects/decorators/tsconfig.lib.json"
+      "path": "./projects/plus-minus/decorators/tsconfig.lib.json"
     },
     {
-      "path": "./projects/decorators/tsconfig.spec.json"
+      "path": "./projects/plus-minus/decorators/tsconfig.spec.json"
     }
 ]
 }
