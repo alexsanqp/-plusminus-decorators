@@ -4,7 +4,7 @@ An Angular decorators.
 
 ## Installation
 
-- `npm install @plus-minus/decorators`
+- `npm install --save @plus-minus/decorators@next`
 
 ## Usage
 
