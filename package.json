@@ -13,9 +13,10 @@
     "v:ma": "cd ./projects/plus-minus/decorators && npm version major",
     "v:mi": "cd ./projects/plus-minus/decorators && npm version minor",
     "v:p": "cd ./projects/plus-minus/decorators && npm version patch",
-    "postversion": "cd ./dist/plus-minus/decorators && npm publish --tag=next --access=public",
+    "postversion:latest": "cd ./dist/plus-minus/decorators && npm publish --tag=latest --access=public",
     "postpublish": "git push origin --all && git push origin --tags",
     "copy": "copy \"README.md\" \"dist/plus-minus/decorators\"",
+    "pub:latest:patch": "npm run package && npm run v:p && npm run postversion:latest && npm run postpublish",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
