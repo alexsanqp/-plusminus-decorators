@@ -1,42 +1,25 @@
 {
-  "name": "@plus-minus/decorators",
+  "name": "workspace-plus-minus-decorators",
   "version": "0.0.3",
   "description": "An Angular decorators",
-  "keywords": [
-    "angular2",
-    "decorators",
-    "angular10",
-    "Mixin",
-    "Memorize",
-    "Override-props"
-  ],
   "author": "Alexandr Krykhtenko <alexsanqp@gmail.com>",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alexsanqp/plusminus-decorators.git"
-  },
-  "bugs": {
-    "url": "https://github.com/alexsanqp/plusminus-decorators/issues"
-  },
-  "homepage": "https://github.com/alexsanqp/plusminus-decorators#readme",
-  "license": "MIT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "build:w": "ng build --project=@plus-minus/decorators --watch",
     "build": "ng build --project=@plus-minus/decorators --prod",
+    "pack": "cd ./dist/plus-minus/decorators && npm pack",
+    "package": "npm run build && npm run pack",
+    "v:ma": "npm version major",
+    "v:mi": "npm version minor",
+    "v:p": "npm version patch",
+    "postversion": "npm publish --tag=next",
+    "postpublish": "git push origin --all && git push origin --tags",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "pack:lib": "npm pack ./dist/plus-minus/decorators",
-    "postpublish": "git push origin --all; git push origin --tags",
-    "postversion": "npm publish --tag=legacy"
+    "e2e": "ng e2e"
   },
   "private": false,
-  "sideEffects": false,
-  "peerDependencies": {
-    "@angular/common": "^10.0.14",
-    "@angular/core": "^10.0.14"
-  },
   "dependencies": {
     "@angular/animations": "~10.0.5",
     "@angular/common": "~10.0.5",

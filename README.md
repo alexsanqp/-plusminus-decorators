@@ -1,10 +1,10 @@
-# plusminus-decorators
+# @plus-minus/decorators
 
 An Angular decorators.
 
 ## Installation
 
-- `npm install plusminus-decorators`
+- `npm install @plus-minus/decorators`
 
 ## Usage
 
@@ -30,7 +30,10 @@ functionality into a single place and being reusable.
        return `${this.firstName} ${this.surName}`;
      }
  
-     public constructor(private firstName: string, private surName: string) {
+     public constructor(
+       private firstName: string,
+       private surName: string
+     ) {
      }
  
      public greet(): string {
@@ -56,7 +59,7 @@ you need to pass an array where the first element will be the mixin class itself
 and all subsequent elements are its parameters.
 
 ```ts
-  import { Mixins } from 'plusminus-decorators';
+  import { Mixins } from '@plus-minus/decorators';
  
   @Component({...})
   @Mixins([
@@ -83,7 +86,7 @@ and all subsequent elements are its parameters.
     again.
 
 ##### Notes
-`Memoization better used only with pure functions.`
+    Memoization better used only with pure functions.
 
 You can pass a parameter object `MemorizeOptions`, where: 
 * **size** is the size of the list that needs to be cached, the default value is 20, this means that we can cache a list that does not exceed 20 elements.
@@ -136,7 +139,7 @@ class ProductService {
 If you use memoization, then it will be executed once, and the cached value of the result of your method will be given to all subsequent changes.
 
 ```ts
-import { Memorize } from 'plusminus-decorators';
+import { Memorize } from '@plus-minus/decorators';
 
 @Component({
   selector: 'pm-root',
@@ -146,10 +149,9 @@ import { Memorize } from 'plusminus-decorators';
       <span class="cost">{{displayCost(product.cost, currentUAExchangeRate) | currency:'USD'}}</span>
     </div>
   </div>`,
-  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  public readonly currentUAExchangeRate = 28.24;
+  public currentUAExchangeRate = 28.24;
 
   public constructor(
     public productService: ProductService,
@@ -176,7 +178,7 @@ export class AppComponent {
 You can also use the memoization function directly in your code.
 
 ```ts
-import { memorizeFn } from 'plusminus-decorators';
+import { memorizeFn } from '@plus-minus/decorators';
 
 const displayTitleMemo = memorizeFn(({ title, vendorCode }: Product): string => {
     return `#${ vendorCode } ${ title }`;
@@ -186,4 +188,29 @@ const displayTitleMemo = memorizeFn(({ title, vendorCode }: Product): string => 
 });
 ```
 
+You can also combine the `@Mixins` decorator with the `@Memorize` decorator.
+
+```ts
+class ProductMixin {
+  @Memorize()
+  public displayTitle({ title, vendorCode }: Product): string {
+    return `#${ vendorCode } ${ title }`;
+  }
+
+  @Memorize()
+  public displayCost(cost: number, exchangeRate: number): number {
+    return cost / 100 * exchangeRate;
+  }
+}
+
+@Component({/*...*/})
+@Mixins([ProductMixin])
+export class ProductsComponent implements ProductMixin {
+  public displayTitle: (product: Product) => string;
+  public displayCost: (cost: number, exchangeRate: number) => number;
+}
+```
+----
+
 #### OverrideProps
+    Coming soon...
