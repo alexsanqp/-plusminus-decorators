@@ -8,7 +8,7 @@ An Angular decorators.
 
 ## Usage
 
-#### Mixins
+### Mixins
 
 Decorator that helps you implement incomplete multiple inheritance.
 
@@ -77,9 +77,10 @@ and all subsequent elements are its parameters.
      }
  }
 ```
+
 ----
 
-#### Memorize
+### @Memorize
     In computing, memoization or memoisation is an optimization technique used
     primarily to speed up computer programs by storing the results of expensive
     function calls and returning the cached result when the same inputs occur
@@ -210,9 +211,10 @@ export class ProductsComponent implements ProductMixin {
   public displayCost: (cost: number, exchangeRate: number) => number;
 }
 ```
+
 ----
 
-#### RuntimeType
+### @RuntimeType
 
 Decorator `@RuntimeType(...)` is intended for type checking at runtime. It can check primitives, functions and classes, but it cannot compare objects that have been created, for example, via an object literal.
 Decorator `@T(...)` is necessary to mark the type of method parameters.
@@ -284,8 +286,58 @@ export class SomeComponent {
 // > The parameter 'first' must be of type 'Number', but not the type 'String'.
 // > The parameter 'third' must be of type 'DataModel', but not the type 'OtherClass'.
 ```
-    
+
 ----
 
-#### OverrideProps
-    Coming soon...
+### @OverrideProps
+
+This is decorator that overrides the property value in the target class. The decorator take key-value pairs as input, where the key is the name of the target class property and its value, respectively.
+
+For example, we have a User service and a versioned API, but some endpoints are gradually moving to a new version, then using this decorator, you can easily change the version or link to another API server.
+
+```ts
+@Injectable()
+class UserService {
+  private version = 'v1.0';
+  private serverUrl = 'http://localhost:3000';
+
+  public get apiUrl(): string {
+    return `${ this.serverUrl }/${ this.version }`;
+  }
+  
+  constructor(private http: HttpClient) {
+  }
+    
+  @OverrideProps({
+     serverUrl: 'http://localhost:9999',
+  })
+  public findAll(): Observable<User[]> {
+    return this.http.get<Response<User[]>>(`${ this.apiUrl }/users`)
+      .pipe(map(({ data }) => data));
+  }
+    
+  @OverrideProps({
+    version: 'v2.0',
+  })
+  public findByPk(id: string): Observable<User> {
+    return this.http.get<Response<User>>(`${ this.apiUrl }/users/${ id }`)
+      .pipe(map(({ data }) => data));
+  }
+}
+
+@Component({...})
+export class UsersComponent {
+  public constructor(
+    private userService: UserService,
+  ) {
+
+    // Request URL: http://localhost:9999/v1.0/users
+    this.userService.findAll().subscribe(() => {/*...*/});
+
+    const userId = '123e4567-e89b-12d3-a456-426614174000';
+
+    // Request URL: http://localhost:3000/v2.0/users/123e4567-e89b-12d3-a456-426614174000
+    this.userService.findByPk(userId).subscribe(() => {/*...*/});
+  }
+}
+```
