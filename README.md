@@ -212,5 +212,80 @@ export class ProductsComponent implements ProductMixin {
 ```
 ----
 
+#### RuntimeType
+
+Decorator `@RuntimeType(...)` is intended for type checking at runtime. It can check primitives, functions and classes, but it cannot compare objects that have been created, for example, via an object literal.
+Decorator `@T(...)` is necessary to mark the type of method parameters.
+
+Decorator `@RuntimeType(RuntimeTypeOptions)` accepts an object with options.
+* **level** - error output level. By default, this setting is RuntimeTypeLevel.Throw
+
+```ts
+interface RuntimeTypeOptions {
+  level?: RuntimeTypeLevel;
+}
+```
+
+With the `setGlobalRuntimeTypeOptions(RuntimeTypeOptions)` function, you can set options globally for the entire application.
+
+```ts
+setGlobalRuntimeTypeOptions({
+  level: environment.production ? RuntimeTypeLevel.Warn : RuntimeTypeLevel.Error,
+});
+```
+
+If you specify options at the method decorator level, then they will take precedence over global ones.
+
+```ts
+@Component(...)
+export class SomeComponent {
+  public constructor() {
+    this.someMethod('23');
+  }
+
+  @RuntimeType({ level: RuntimeTypeLevel.Log })
+  public someMethod(@T(Number) param?: any): void {
+    // ...
+  }
+}
+```
+    > The parameter 'param' must be of type 'Number', but not the type 'string'.
+
+#####More examples
+
+```ts
+class DataModel {
+  // ...
+}
+
+class OtherClass  {
+  // ...
+}
+
+class SecondClass extends DataModel {
+  // ...
+}
+
+@Component(...)
+export class SomeComponent {
+  public constructor() {
+    this.someMethod('23' as any, new SecondClass(), new OtherClass());
+  }
+
+  @RuntimeType()
+  public someMethod(
+    @T(Number) first: number,
+    @T(DataModel) second: DataModel, 
+    @T(DataModel)third: DataModel
+  ): void {
+    // ...
+  }
+}
+// > The parameter 'first' must be of type 'Number', but not the type 'String'.
+// > The parameter 'third' must be of type 'DataModel', but not the type 'OtherClass'.
+```
+    
+----
+
 #### OverrideProps
     Coming soon...
