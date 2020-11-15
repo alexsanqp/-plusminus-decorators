@@ -78,6 +78,28 @@ and all subsequent elements are its parameters.
  }
 ```
 
+####You can use ready-made mixins from `@plus-minus/decorators/mixin-classes`
+* `SubscriptionMixin` - this mixin can unsubscribe from: `setInterval`, `settimeout` and `Observable` subscriptions. Use this type `SubscriptionMixinType` to declare mixin methods in your class.
+    ```ts
+    @Component({...})
+    @Mixins([SubscriptionMixin])
+    export class SomeComponent implements SubscriptionMixinType {
+      public addSubId: (id: number | Subscription) => void;
+      public clearSubById: (id: number | Subscription) => void;
+      public clearAllSubs: () => void;
+  
+      public constructor() {
+          const subTimeoutId = setTimeout(() => alert('Hello World!'), 5000);
+          const intervalSubId = interval(1000).subscribe(console.log);
+          this.addSubId(subTimeoutId);
+          this.addSubId(intervalSubId);
+      
+          setTimeout(() => this.clearSubById(subTimeoutId), 3000);
+          setTimeout(() => this.clearAllSubs(), 6000);
+        }
+    }
+    ```
+
 ----
 
 ### @Memorize
